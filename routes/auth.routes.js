@@ -9,9 +9,9 @@ const uploader = require('../configs/cloudinary.config');
 const bcryptSalt = 10;
 
 router.post('/signup', (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, name } = req.body;
 
-  if(password.length < 3){
+  if(password.length < 3 || password.length > 10){
     return res.status(400).json({ message: 'Please make your password at least 3 characters long'});
   }
 
@@ -19,7 +19,7 @@ router.post('/signup', (req, res, next) => {
     return res.status(400).json({ message: 'Please fill all the fields in the form'});
   }
 
-  User.findOne({ $or: [{ username }, { mail }]})
+  User.findOne({ $or: [{ username }, { email }]})
   .then(user => {
     if(user){
       return res.status(400).json({ message: 'User already exists. Please change your email'});
@@ -28,7 +28,7 @@ router.post('/signup', (req, res, next) => {
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
 
-    User.create({username, email,password: hashPass})
+    User.create({username, email, name, password: hashPass})
     .then((newUser) => {
       req.login(newUser, (error) => {
         if(error){
@@ -67,7 +67,7 @@ router.get('/loggedin', (req, res, next) => {
   if(req.isAuthenticated()){
     return res.status(200).json(req.user);
   } else {
-    return res.status(403).json({ message: 'Unauthorized' });
+    return res.status(403).json({ message: 'pls login first' });
   }
 })
 

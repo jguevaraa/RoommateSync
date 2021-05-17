@@ -4,9 +4,10 @@ const Schema = mongoose.Schema
 const messageSchema = new Schema({
 
     to: {type: schema.Types.ObjetcId, ref: "User"},
+    from: {type: schema.Types.ObjetcId, ref: "User"},
     message: {type: String},
-    messageSend: [{type: schema.Types.ObjetcId, ref: "User"}],
-    messageRecive: [{type: schema.Types.ObjetcId, ref: "User"}],
+    // messageSend: [{type: schema.Types.ObjetcId, ref: "User"}],
+    // messageRecive: [{type: schema.Types.ObjetcId, ref: "User"}],
     created: {type: Date, default: Date.now()},
   }, {
     timestamps: true,

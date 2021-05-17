@@ -7,69 +7,29 @@ const crypto = require('crypto')
 
 const bookingSchema = new Schema(
   {
-    name: {
-      type: String,
-      trim: true,
-      required: [true, 'Introduce tu nombre'],
-    },
-    email: {
-      type: String,
-      trim: true,
-      required: [true, 'Introduce tu email'],
-      validate: {
-        validator: function (emailInput) {
-          return /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/gi.test(emailInput)
-        },
-        message: (props) => `${props.value} is not a valid email`,
-      },
-    },
-    phoneNumber: {
-      type: String,
-      trim: true,
-    },
-    groupCode: {
-      type: String,
-      trim: true,
-    },
-
-  
-    arrival: {
-      date: {
-        type: Date,
-        required: [true, 'Debes especificar una fecha de llegada'],
-      },
-    },
-
-    departure: {
-      date: {
-        type: Date,
-        required: [true, 'Debes especificar una fecha de salida'],
-      },
-    },
-
-    firstTime: {
-      type: Boolean,
-      default: true,
-      required: true,
-    },
-
-    price: {
-      type: Number,
-      min: 0,
-    },
-
-    status: {
-      type: String,
-      enum: ['pending', 'accepted', 'cancelled'],
-      default: 'pending',
-    },
-
-
+    name: {type: String, trim: true, required: true},
+    email: {type: String, trim: true, required: true},
+    phoneNumber: {type: String, trim: true},  
+    arrival: {type: Date, required: true},
+    departure: {type: Date, required: true},
+    price: {type: Number, min: 0,},
+    status: {type: String, enum: ['pending', 'accepted', 'cancelled'], default: 'pending'},
   },
   {
     timestamps: true,
   }
 )
+
+
+const Booking = mongoose.model('Booking', bookingSchema)
+module.exports = Booking
+
+
+
+
+
+
+
 
 // bookingSchema.pre('validate', function (next) {
 //   if (this.arrival.date > this.departure.date) {
@@ -97,5 +57,4 @@ const bookingSchema = new Schema(
 // })
 
 
-const Booking = mongoose.model('Booking', bookingSchema)
-module.exports = Booking
+

@@ -4,16 +4,16 @@ const User = require("../models/User.model")
 
 // Get all users
 router.get("/", (req, res, next) => {
-  Users.find({ user: req.user.id })
-  .then(Users =>  res.status(200).json(todos))
+  User.find()
+  .then(Users =>  res.status(200).json(Users))
   .catch(err => res.status(500).json(err))
 })
 
 
 router.get("/:id", (req, res, next) => {
   const { id } = req.params;
-  Users.findOne({ _id: id, user: req.user.id  })
-  .then(Users => res.status(200).json(todo))
+  User.findOne({ _id: id })
+  .then(Users => res.status(200).json(Users))
   .catch(err => res.status(500).json(err))
 })
 
