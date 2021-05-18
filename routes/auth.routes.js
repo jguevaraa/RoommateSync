@@ -9,8 +9,8 @@ const uploader = require('../configs/cloudinary.config');
 const bcryptSalt = 10;
 
 router.post('/signup', (req, res, next) => {
-  const { username, email, password, name } = req.body;
-
+  const { username, email, password  } = req.body;
+const name = username
   if(password.length < 3 || password.length > 10){
     return res.status(400).json({ message: 'Please make your password at least 3 characters long'});
   }
@@ -50,7 +50,7 @@ router.post('/login', (req, res, next) => {
     }
 
     if(!theUser){
-      return res.status(401).json(failureDetails);
+      return res.status(401).json({message: "error linea 53 login route"});
     }
 
     req.login(theUser, (err) => (err ? res.status(500).json({ message: "Session error" }) : res.json(theUser)))
