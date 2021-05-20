@@ -18,10 +18,13 @@ router.put('/profile/edit', uploader.single('photo'), (req, res, next) => {
 })
 
 router.get("/profile/favorites", (req, res, next) => {
-  User.findOne({_id:req.user._id})
+
+  console.log(req.user._id)
+
+  User.findById(req.user._id)
   .populate("fav")
-  .populate("messageRecive")
-  .populate("messageSend")
+  //.populate("messageRecive")
+  //.populate("messageSend")
   .then(user => res.status(200).json(user))
   .catch(error => res.status(500).json(error))
 })
